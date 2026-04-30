@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce DBMS Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <button class="tab-btn active" onclick="openTab(event, 'tab-catalog')">1. Catalog (Filters)</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-history')">2. User History (Joins)</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-checkout')">3. Checkout (Transactions)</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-admin')">4. Admin (Triggers)</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-analytics')">5. Analytics (Views & Windows)</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-recommend')">6. Recommendations (Self-Joins)</button>
+    </nav>
+    <main>
+        <section id="tab-catalog" class="tab-content active">
+            <h2>Product Catalog</h2>
+            <div class="controls">
+                <input type="text" id="search-input" placeholder="Search products...">
+                <select id="category-select"><option value="">All Categories</option></select>
+                <select id="sort-select">
+                    <option value="">Default Sort</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                </select>
+                <button onclick="loadCatalog()">Run Query</button>
+            </div>
+            <div id="catalog-results" class="results-grid"></div>
+        </section>
+        <section id="tab-history" class="tab-content">
+            <h2>User Profile & Deep Join History</h2>
+            <div class="controls">
+                <select id="user-select"></select>
+                <button onclick="loadUserHistory()">View History</button>
+            </div>
+            <div id="history-results" class="results-table-container"></div>
+        </section>
+        <section id="tab-checkout" class="tab-content">
+            <h2>Checkout Simulator (ACID Transaction)</h2>
+            <p>Select a user and a product to simulate a checkout using a Stored Procedure.</p>
+            <div class="controls">
+                <select id="checkout-user-select"></select>
+                <select id="checkout-product-select"></select>
+                <input type="number" id="checkout-qty" value="1" min="1" max="10">
+                <button onclick="simulateCheckout()">Execute Checkout Transaction</button>
+            </div>
+            <div id="checkout-results" class="results-box"></div>
+        </section>
+        <section id="tab-admin" class="tab-content">
+            <h2>Inventory & Audit Triggers</h2>
+            <div class="split-view">
+                <div>
+                    <h3>Low Stock Inventory</h3>
+                    <button onclick="loadInventory()">Refresh Inventory</button>
+                    <div id="inventory-results" class="results-table-container"></div>
+                </div>
+                <div>
+                    <h3>Audit Logs (Triggered by Updates)</h3>
+                    <button onclick="loadAuditLogs()">Refresh Logs</button>
+                    <div id="audit-results" class="results-table-container"></div>
+                </div>
+            </div>
+        </section>
+        <section id="tab-analytics" class="tab-content">
+            <h2>Business Intelligence</h2>
+            <div class="controls">
+                <button onclick="loadMonthlySales()">Monthly Sales (View)</button>
+                <button onclick="loadTopSpenders()">Top Spenders (Aggregations)</button>
+                <button onclick="loadCategoryRanks()">Category Ranks (Window Functions)</button>
+            </div>
+            <div id="analytics-results" class="results-table-container"></div>
+        </section>
+        <section id="tab-recommend" class="tab-content">
+            <h2>Recommendations (Self-Joins)</h2>
+            <p>"Customers who bought this also bought..."</p>
+            <div class="controls">
+                <select id="rec-product-select"></select>
+                <button onclick="loadRecommendations()">Get Recommendations</button>
+            </div>
+            <div id="recommend-results" class="results-grid"></div>
+        </section>
+    </main>
+    <div id="sql-console">
+        <div class="console-header">SQL Execution Console</div>
+        <pre><code id="sql-output">-- Queries will appear here...</code></pre>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
